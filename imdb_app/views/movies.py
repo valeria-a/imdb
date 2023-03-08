@@ -12,8 +12,9 @@ class MoviesPaginationClass(PageNumberPagination):
 
 class MoviesPermissions(BasePermission):
     def has_permission(self, request, view):
-        if request.method in ['POST', 'PUT', 'PATCH']:
+        if request.method in ['POST', 'PUT', 'PATCH','DELETE']:
             return request.user.is_staff
+        return True
 
 
 class MoviesViewSet(viewsets.ModelViewSet):
@@ -28,5 +29,5 @@ class MoviesViewSet(viewsets.ModelViewSet):
 
     # pagination is defined either using DEFAULT_PAGINATION_CLASS in settings.py
     # or you can specify one here
-    # pagination_class = MoviesPaginationClass
+    pagination_class = MoviesPaginationClass
 

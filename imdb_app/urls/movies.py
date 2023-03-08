@@ -7,7 +7,6 @@ from imdb_app.views.movies import MoviesViewSet
 router = DefaultRouter()
 router.register('', MoviesViewSet)
 
-
 urlpatterns = []
 
 # adding movies urls to urlpatterns
