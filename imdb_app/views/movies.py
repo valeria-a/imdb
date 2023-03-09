@@ -1,6 +1,7 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework.pagination import LimitOffsetPagination, PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, BasePermission, SAFE_METHODS
+from rest_framework.viewsets import GenericViewSet
 
 from imdb_app.models import Movie
 from imdb_app.serializers.movies import MovieSerializer
@@ -17,7 +18,11 @@ class MoviesPermissions(BasePermission):
         return True
 
 
-class MoviesViewSet(viewsets.ModelViewSet):
+class MoviesViewSet(mixins.CreateModelMixin,
+                   mixins.RetrieveModelMixin,
+                   mixins.UpdateModelMixin,
+                   mixins.ListModelMixin,
+                   GenericViewSet):
 
     queryset = Movie.objects.all()
 
