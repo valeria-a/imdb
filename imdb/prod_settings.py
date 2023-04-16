@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-cn73#a02ey9rjx@-!=2l%%w(xuq*gp07uo$@a=yhcy3dg1%=!9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ec2-3-86-98-164.compute-1.amazonaws.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ec2-3-86-98-164.compute-1.amazonaws.com',
+                 'ec2-3-83-250-10.compute-1.amazonaws.com']
 
 
 # Application definition
@@ -83,7 +84,7 @@ DATABASES = {
         'NAME': 'imdb',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'database-1.cgumkpy6seqg.us-east-1.rds.amazonaws.com',
+        'HOST': 'database-2.cgumkpy6seqg.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
