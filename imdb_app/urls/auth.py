@@ -21,13 +21,16 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from imdb_app.views.auth import signup, me
+from imdb_app.views.auth import signup, me, upload_profile_img
 
 urlpatterns = [
     path('signup/', signup),
+
     # given
     path('token/', TokenObtainPairView.as_view()),
-    # given
     path('token/refresh/', TokenRefreshView.as_view()),
-    path('me/', me)
+
+    path('me/profile_img', upload_profile_img),
+    path('me/', me),
+
 ]
