@@ -5,22 +5,22 @@ from botocore.exceptions import ClientError, BotoCoreError
 
 
 
-# connecting to s3
-try:
-    s3_client = boto3.client('s3')
-    print('Successfully connected to s3 client')
-except ClientError as e:
-    print('Error connecting to s3 client', e)
-
-# # list buckets
+# # connecting to s3
+# try:
+#     s3_client = boto3.client('s3')
+#     print('Successfully connected to s3 client')
+# except ClientError as e:
+#     print('Error connecting to s3 client', e)
+#
+# # # list buckets
 # response = s3_client.list_buckets()
 # pprint.pprint(response)
-#
-#
-# # credentials
-#
-#
-# # Output the bucket names
+# #
+# #
+# # # credentials
+# #
+# #
+# # # Output the bucket names
 # print('Existing buckets:')
 # for bucket in response['Buckets']:
 #     print(f'  {bucket["Name"]}')
@@ -48,7 +48,7 @@ except ClientError as e:
 
 
 # download file
-s3 = boto3.client('s3')
+# s3 = boto3.client('s3')
 # # s3.download_file('BUCKET_NAME', 'OBJECT_NAME', 'FILE_NAME')
 # s3.download_file('edulabs-public', 'concap.csv', 'temp.csv')
 # print(f"downloaded to temp.csv")
@@ -77,8 +77,9 @@ s3 = boto3.client('s3')
 
 
 # upload file
-response = s3.upload_file('requirements.txt', 'edulabs-private', 'src/requirements.txt')
-print('Successfully uploaded')
+# s3 = boto3.client('s3')
+# response = s3.upload_file('requirements.txt', 'edulabs-private', 'a/b/c/d/requirements.txt')
+# print('Successfully uploaded')
 
 # need to add write permissions
 

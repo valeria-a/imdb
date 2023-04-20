@@ -39,8 +39,17 @@ def me(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def upload_profile_img(request):
+    # if request.data['file'].size > 3 * 1024 * 1024:
+    #     return Response(status=400)
+    #
+    # jpeg_header = request.data['file'].file.read(1024)
+    # request.data['file'].file.seek(0)
+
+    # with open() as f:
+    #     pass
 
     # generate unique id
+    # bucket_name/uuid.jpeg
     random_uuid = uuid.uuid1()
     file, ext = os.path.splitext(request.data['file'].name)
     bucket_name = 'edulabs-public'
@@ -48,6 +57,7 @@ def upload_profile_img(request):
 
     s3 = boto3.client('s3')
     s3.upload_fileobj(request.data['file'].file, bucket_name, obj_key)
+
     print(f'Successfully uploaded!')
 
     url = f"https://{bucket_name}.s3.amazonaws.com/{obj_key}"
@@ -59,3 +69,21 @@ def upload_profile_img(request):
     profile.save()
 
     return Response()
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def get_presigned_url(request):
+    # go to db and get bucket_name and obj_key according to video_id
+    s3_client = boto3.client('s3')
+    response = s3_client.generate_presigned_url('get_object',
+                                                Params={'Bucket': 'edulabs-private',
+                                                        'Key': 'panda.jpeg'},
+                                                ExpiresIn=600)
+
+    # response = s3_client.generate_presigned_post(bucket_name,
+    #                                              object_name,
+    #                                              # Fields=fields,
+    #                                              # Conditions=conditions,
+    #                                              ExpiresIn=expiration)
+    return Response(data={'presigned_url': response})

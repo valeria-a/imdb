@@ -38,4 +38,5 @@ class Review(models.Model):
 class UserProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.RESTRICT)
+
     profile_pic_url = models.CharField(max_length=1024, null=True, blank=True)

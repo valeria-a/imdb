@@ -21,7 +21,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from imdb_app.views.auth import signup, me, upload_profile_img
+from imdb_app.views.auth import signup, me, upload_profile_img, get_presigned_url
 
 urlpatterns = [
     path('signup/', signup),
@@ -32,5 +32,6 @@ urlpatterns = [
 
     path('me/profile_img', upload_profile_img),
     path('me/', me),
+    path('me/presigned_url', get_presigned_url)
 
 ]
