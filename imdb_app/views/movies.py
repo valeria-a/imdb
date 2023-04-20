@@ -1,3 +1,5 @@
+import django_filters
+from django_filters.rest_framework import FilterSet
 from rest_framework import viewsets, mixins
 from rest_framework.pagination import LimitOffsetPagination, PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, BasePermission, SAFE_METHODS
@@ -8,7 +10,7 @@ from imdb_app.serializers.movies import MovieSerializer
 
 
 class MoviesPaginationClass(PageNumberPagination):
-    page_size = 3
+    page_size = 5
 
 
 class MoviesPermissions(BasePermission):
@@ -17,6 +19,16 @@ class MoviesPermissions(BasePermission):
             return request.user.is_staff
         return True
 
+class MovieFilterSet(FilterSet):
+
+    name = django_filters.CharFilter(field_name='name', lookup_expr='iexact')
+    release_year_min = django_filters.NumberFilter('release_year', lookup_expr='gte')
+    release_year_max = django_filters.NumberFilter('release_year', lookup_expr='lte')
+    description = django_filters.CharFilter(field_name='description', lookup_expr='icontains')
+
+    class Meta:
+        model = Movie
+        fields = ['name']
 
 class MoviesViewSet(mixins.CreateModelMixin,
                    mixins.RetrieveModelMixin,
@@ -27,7 +39,6 @@ class MoviesViewSet(mixins.CreateModelMixin,
     queryset = Movie.objects.all()
 
     permission_classes = [MoviesPermissions]
-    # authentication_classes = [JWTAuthentication]
 
     # we need different serializers for different actions
     serializer_class = MovieSerializer
@@ -35,4 +46,6 @@ class MoviesViewSet(mixins.CreateModelMixin,
     # pagination is defined either using DEFAULT_PAGINATION_CLASS in settings.py
     # or you can specify one here
     pagination_class = MoviesPaginationClass
+
+    filterset_class = MovieFilterSet
 

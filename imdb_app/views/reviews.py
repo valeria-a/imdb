@@ -1,9 +1,6 @@
-from rest_framework import mixins
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import ValidationError
-from rest_framework.permissions import IsAuthenticated, BasePermission
-from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.permissions import BasePermission
+from rest_framework.viewsets import ModelViewSet
 
 from imdb_app.models import Review
 from imdb_app.serializers.reviews import ReviewSerializer, CreateReviewSerializer
