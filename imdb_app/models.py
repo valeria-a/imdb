@@ -18,6 +18,7 @@ class Movie(models.Model):
     poster_url = models.URLField(max_length=512, db_column='poster_url', null=True, blank=True)
 
     director = models.ForeignKey('Director', on_delete=models.RESTRICT, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.RESTRICT, null=True)
 
     def __str__(self):
         return self.name

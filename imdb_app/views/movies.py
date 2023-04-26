@@ -1,4 +1,5 @@
 import django_filters
+from django.db import transaction
 from django_filters.rest_framework import FilterSet
 from rest_framework import viewsets, mixins
 from rest_framework.pagination import LimitOffsetPagination, PageNumberPagination
@@ -15,9 +16,15 @@ class MoviesPaginationClass(PageNumberPagination):
 
 class MoviesPermissions(BasePermission):
     def has_permission(self, request, view):
-        if request.method in ['POST', 'PUT', 'PATCH','DELETE']:
+        if request.method in ['POST', 'PUT', 'PATCH']:
             return request.user.is_staff
+        if request.method == 'DELETE':
+            return request.user.is_superuser
         return True
+
+    def has_object_permission(self, request, view, obj):
+        return obj.created_by == request.user
+
 
 class MovieFilterSet(FilterSet):
 
@@ -48,4 +55,12 @@ class MoviesViewSet(mixins.CreateModelMixin,
     pagination_class = MoviesPaginationClass
 
     filterset_class = MovieFilterSet
+
+    def perform_create(self, serializer):
+        # inject created_by user
+        # important to execute everything in one single transaction
+        with transaction.atomic():
+            super().perform_create(serializer)
+            serializer.instance.created_by = self.request.user
+            serializer.instance.save()
 

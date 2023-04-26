@@ -1,5 +1,7 @@
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated, BasePermission, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -29,3 +31,26 @@ def me(request):
     # you will get here only if the user is already authenticated!
     user_serializer = UserSerializer(instance=request.user, many=False)
     return Response(data=user_serializer.data)
+
+
+class UsersGenericView(ListAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    permission_classes = [IsAdminUser]
+
+
+class UpdateUserPermission(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        can_proceed = obj.id == request.user.id
+        if can_proceed:
+            pass
+        return can_proceed
+
+class UpdateUserGenericView(UpdateAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    permission_classes = [UpdateUserPermission]
+
+    # Treat PUT as PATCH
+    def put(self, request, *args, **kwargs):
+        return self.patch(request, *args, *kwargs)
