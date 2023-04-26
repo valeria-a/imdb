@@ -1,9 +1,9 @@
 import django_filters
 from django.db import transaction
 from django_filters.rest_framework import FilterSet
-from rest_framework import viewsets, mixins
-from rest_framework.pagination import LimitOffsetPagination, PageNumberPagination
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, BasePermission, SAFE_METHODS
+from rest_framework import mixins
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import BasePermission
 from rest_framework.viewsets import GenericViewSet
 
 from imdb_app.models import Movie

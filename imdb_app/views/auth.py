@@ -40,11 +40,12 @@ class UsersGenericView(ListAPIView):
 
 
 class UpdateUserPermission(BasePermission):
+
+    # Note, validation that if is_staff field is sent - it can only
+    # be changed by the staff user is done in the serializer
     def has_object_permission(self, request, view, obj):
-        can_proceed = obj.id == request.user.id
-        if can_proceed:
-            pass
-        return can_proceed
+        return obj.id == request.user.id
+
 
 class UpdateUserGenericView(UpdateAPIView):
     serializer_class = UserSerializer
