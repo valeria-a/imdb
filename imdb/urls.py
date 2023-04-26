@@ -23,5 +23,6 @@ urlpatterns = [
     path('api/auth/', include('imdb_app.urls.auth')),
     path('api/movies/', include('imdb_app.urls.movies')),
     path('api/reviews/', include('imdb_app.urls.reviews')),
-    path('api/stats', stats)
+    path('api/stats', stats),
+    path('api/oscars/', include('imdb_app.urls.oscars')),
 ]
