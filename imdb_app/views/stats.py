@@ -19,3 +19,5 @@ def stats(request):
         'total_reviews': total_reviews
     }
     return Response(ret_val)
+
+

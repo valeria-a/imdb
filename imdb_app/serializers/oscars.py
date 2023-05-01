@@ -30,6 +30,7 @@ class OscarSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Oscar
         fields = '__all__'
+        # depth=1
 
 
 class CreateOscarSerializer(serializers.ModelSerializer):

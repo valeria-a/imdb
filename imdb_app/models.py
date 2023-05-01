@@ -11,7 +11,8 @@ class Movie(models.Model):
         db_table = 'movies'
         ordering = ['id']
 
-    name = models.CharField(max_length=256, db_column='name', null=False, blank=False)
+    name = models.CharField(max_length=256, db_column='name', null=False, db_index=True,
+                            blank=False)
     description = models.TextField(db_column='description', null=True, blank=True)
     release_year = models.IntegerField(db_column='release_year', null=False, blank=False)
     duration_in_min = models.FloatField(db_column='duration', null=True, blank=True)
@@ -30,7 +31,8 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     rating = models.SmallIntegerField(
-        db_column='rating', null=False, validators=[MinValueValidator(1), MaxValueValidator(10)])
+        db_column='rating', null=False,
+        validators=[MinValueValidator(1), MaxValueValidator(10)])
     review_text = models.TextField(
         db_column='review_text', null=True, blank=True
     )

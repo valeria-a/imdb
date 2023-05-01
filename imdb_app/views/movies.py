@@ -37,6 +37,7 @@ class MovieFilterSet(FilterSet):
         model = Movie
         fields = ['name']
 
+
 class MoviesViewSet(mixins.CreateModelMixin,
                    mixins.RetrieveModelMixin,
                    mixins.UpdateModelMixin,

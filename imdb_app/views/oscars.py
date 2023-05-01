@@ -19,7 +19,8 @@ class OscarFilterSet(FilterSet):
 
     def filter_by_actor_nominations(self, queryset, name, value):
         if value:
-            queryset = queryset.filter(nomination_type__in=[n[0] for n in models.Oscar.NOMINATIONS['actor']])
+            queryset = queryset.filter(
+                nomination_type__in=[n[0] for n in models.Oscar.NOMINATIONS['actor']])
         return queryset
 
     class Meta:
@@ -47,10 +48,17 @@ class OscarsViewSet(mixins.CreateModelMixin,
     def filter_queryset(self, queryset):
         if self.action == 'get_oscars_by_year':
             queryset = queryset.filter(year=self.kwargs['year'])
+        # will call FilterBackend with FilterSet
         queryset = super().filter_queryset(queryset)
         return queryset
 
-    @action(methods=['GET'], detail=False, url_path=r'years/(?P<year>\d+)$')
+    # api/oscars -> detail=False
+    # api/oscars/<oscar_id> -> detail=True
+    # api/oscars/years/2003
+    # r'years/(\d{4})'
+    # years/1999
+    # match.group(1)
+    @action(methods=['GET'], detail=False, url_path=r'years/(?P<year>\d{4})$')
     def get_oscars_by_year(self, request, year=None):
         # just return the default list logic, specific filtering will be performed in
         # filter_queryset overwrite
