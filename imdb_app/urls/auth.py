@@ -21,7 +21,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from imdb_app.views.auth import signup, me, UsersGenericView, UpdateUserGenericView
+from imdb_app.views.auth import signup, me, UsersGenericView, UpdateUserGenericView, google_auth
 
 urlpatterns = [
     path('signup/', signup),
@@ -30,7 +30,10 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
 
+    path('token/google/', google_auth),
+
     path('me/', me),
     path('users/', UsersGenericView.as_view()),
     path('users/<int:pk>', UpdateUserGenericView.as_view())
+
 ]
